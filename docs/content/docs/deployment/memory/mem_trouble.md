@@ -54,6 +54,18 @@ You can try to increase its limit by adjusting direct off-heap memory.
 See also how to configure off-heap memory for [TaskManagers]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#configure-off-heap-memory-direct-or-native),
 [JobManagers]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#configure-off-heap-memory) and the [JVM arguments]({{< ref "docs/deployment/memory/mem_setup" >}}#jvm-parameters) which Flink sets.
 
+> **Note:** In recent versions of Flink (1.17+), the configuration
+> parameter `<code>taskmanager.memory.network.direct</code>` determines
+> the fraction of memory allocated for network buffers/direct memory.
+> If encountering this error, verify that:
+>
+> 1. The configured network buffer/direct memory fraction is appropriate.
+> 2. Sum of total JVM heap + managed memory + direct memory stays within the
+>    limits of your container or machine.
+> 3. No external library or user code is allocating unmanaged off-heap memory
+>    outside of Flink's memory management.
+
+
 ## OutOfMemoryError: Metaspace
 
 The exception usually indicates that [JVM metaspace limit]({{< ref "docs/deployment/memory/mem_setup" >}}#jvm-parameters) is configured too small.
